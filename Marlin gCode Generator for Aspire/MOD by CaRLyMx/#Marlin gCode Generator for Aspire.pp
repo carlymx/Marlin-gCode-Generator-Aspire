@@ -21,6 +21,8 @@
 +						Pausas G4 para poder encender el Spindle Motor
 +						Mensajes en Pantalla
 +			10/05/2019	Cambio de Herramienta 'begin TOOLCHANGE' Mas Completo
++			20/05/2019	Al finalizar un trabajo suenan unos tonos
++
 +==================================================================================
 
 POST_NAME = "Marlin [CaRLyMx MOD] (mm) (*.gcode)"
@@ -90,12 +92,12 @@ begin HEADER
 " "
 "G90 		; Coordenadas en Posiciones absolutas."
 "G21 		; Unidades en Milimetros."
-";M84 S0 	; Apagar Motores Paso a paso."
+";M84 	; Apagar Motores Paso a paso."
 ";M03 S12000 ; Iniciar Spindle Motor."
 " "
-"G0 Z10 		; Subir Z para ir a Origen y que no rasque la broca el material"
+"G0 Z20 		; Subir Z para ir a Origen y que no rasque la broca el material"
 "G28 X Y		; Ir a Origen X Y"
-"G92 Z10		; Marcar Punto CERO a Z (+10)"
+"G92 Z20		; Marcar Punto CERO a Z (+10)"
 "M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
 "G4 S5			; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
 " "
@@ -149,25 +151,25 @@ begin TOOLCHANGE
 "; ---> Para la Maquina y Cambia Heramienta:"
 "G0 Z20		; Subir Z para cambiar de herramienta"
 "M05		; Para el Spindle Motor"
+"M300 S2349 P60		; Tono Musical"
+"M300 S2349 P460	; Tono Musical"
+"M300 S2349 P60		; Tono Musical"
+"M300 S2349 P460	; Tono Musical"
+"M300 S2349 P60		; Tono Musical"
+"M300 S2349 P460	; Tono Musical"
 "M117 Cambie la herramienta por: [TOOLNAME]"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
 "M25		; Hace una Pausa"
 " "
 "; ---> Prepara Origen Z:"
-"M84 S0 		; Apagar Motores Paso a paso."
+"M84 		; Apagar Motores Paso a paso."
 "M117 BUSQUE EL ORIGEN Z"
 "M25		; Hace una Pausa"
 " "
 "; ---> Busca el Origen XY y encienda el Spindle Motor"
 "M03 S12000 	; Iniciar Spindle Motor." 
-"G0 Z10 		; Subir Z para ir a Origen y que no rasque la broca el material"
+"G0 Z20 		; Subir Z para ir a Origen y que no rasque la broca el material"
 "G28 X Y		; Ir a Origen X Y"
-"G92 Z10		; Marcar Punto CERO a Z (+10)"
+"G92 Z20		; Marcar Punto CERO a Z (+10)"
 "M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
 "G4 S5			; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
 " "
@@ -195,4 +197,10 @@ begin NEW_SEGMENT
 begin FOOTER
 
 "G0 [SAFEZ] ;goto safe z"
-
+"M300 S2349 P60		; Tono Musical"
+"M300 S2349 P460	; Tono Musical"
+"M300 S2349 P60		; Tono Musical"
+"M300 S2349 P460	; Tono Musical"
+"M300 S2349 P60		; Tono Musical"
+"M300 S2349 P460	; Tono Musical"
+"M117 TERMINADO!"
