@@ -22,6 +22,8 @@
 +						Mensajes en Pantalla
 +			10/05/2019	Cambio de Herramienta 'begin TOOLCHANGE' Mas Completo
 +			20/05/2019	Al finalizar un trabajo suenan unos tonos
++			28/05/2019	Modificado los 'G0 Z10' y 'G92 Z10' de 'begin HEADER' y 'begin TOOLCHANGE' por 'G0 [SAFEZ]' y 'G92 [SAFEZ]'
++							*Así, se permite variar la altura de zona segura desde el programa.
 +
 +==================================================================================
 
@@ -95,9 +97,9 @@ begin HEADER
 ";M84 	; Apagar Motores Paso a paso."
 ";M03 S12000 ; Iniciar Spindle Motor."
 " "
-"G0 Z20 		; Subir Z para ir a Origen y que no rasque la broca el material"
+"G0 [SAFEZ] 	; Subir Z para ir a Origen y que no rasque la broca el material"
 "G28 X Y		; Ir a Origen X Y"
-"G92 Z20		; Marcar Punto CERO a Z (+10)"
+"G92 [SAFEZ]	; Marcar Punto CERO a Z=[SAFEZ]"
 "M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
 "G4 S5			; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
 " "
@@ -149,27 +151,21 @@ begin TOOLCHANGE
 " "
 " "
 "; ---> Para la Maquina y Cambia Heramienta:"
-"G0 Z20		; Subir Z para cambiar de herramienta"
-"M05		; Para el Spindle Motor"
+"G0 [SAFEZ]			; Subir Z para cambiar de herramienta"
+"M05				; Para el Spindle Motor"
+"M84 				; Apagar Motores Paso a paso."
 "M300 S2349 P60		; Tono Musical"
 "M300 S2349 P460	; Tono Musical"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
-"M117 Cambie la herramienta por: [TOOLNAME]"
-"M25		; Hace una Pausa"
 " "
 "; ---> Prepara Origen Z:"
-"M84 		; Apagar Motores Paso a paso."
-"M117 BUSQUE EL ORIGEN Z"
+"M117 CAMBIE HER. Y BUSQUE EL ORIGEN Z"
 "M25		; Hace una Pausa"
 " "
 "; ---> Busca el Origen XY y encienda el Spindle Motor"
 "M03 S12000 	; Iniciar Spindle Motor." 
-"G0 Z20 		; Subir Z para ir a Origen y que no rasque la broca el material"
+"G0 [SAFEZ]		; Subir Z para ir a Origen y que no rasque la broca el material"
 "G28 X Y		; Ir a Origen X Y"
-"G92 Z20		; Marcar Punto CERO a Z (+10)"
+"G92 [SAFEZ]	; Marcar Punto CERO a Z=[SAFEZ]"
 "M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
 "G4 S5			; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
 " "
