@@ -126,7 +126,7 @@ begin RAPID_MOVE
 
 begin FIRST_FEED_MOVE
 
-"G0 [X] [Y] [Z] [F]"
+"G1 [X] [Y] [Z] [F]"
 
 
 +---------------------------------------------------
@@ -135,7 +135,7 @@ begin FIRST_FEED_MOVE
 
 begin FEED_MOVE
 
-"G0 [X] [Y] [Z]"
+"G1 [X] [Y] [Z]"
 
 +---------------------------------------------------
 +  Commands output for tool changes
