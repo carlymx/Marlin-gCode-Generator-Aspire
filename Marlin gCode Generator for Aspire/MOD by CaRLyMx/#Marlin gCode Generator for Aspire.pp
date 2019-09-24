@@ -1,33 +1,37 @@
 +===========================================================+
-+                                                			+
-+ 			Marlin gCode Generator for Vectric Aspire		+
-+						'CaRLyMx MOD'						+
-+   						GitHub:							+
-+ https://github.com/carlymx/Marlin-gCode-Generator-Aspire	+
-+                                                			+
++                                                	          +
++	        Marlin gCode Generator for Vectric Aspire	        +
++			                'CaRLyMx MOD'			                    +
++   			               GitHub:			                      +
++ https://github.com/carlymx/Marlin-gCode-Generator-Aspire  +
++                                                	          +
 +===========================================================+
 +           
-+ Versión: 12052019-001
++ Versión: 24092019-001
 +                                    
 + History:                                        
 +                                                
-+ Who    	When       	What                         
++ Who    	    When       	What                         
 + ======== 	========== 	===========================================================
-+	MikeK	13/12/2015	Written   
-+	JohnP	02/03/2017	Added multi-tool with pause 
-+	CaRLyMx	08/05/2019	Todos los movimientos con 'G0' (consumen menos memoria)
-+						Modificado el comando 'begin HEADER'
-+			09/05/2019	Añadido en 'begin HEADER':
-+						Pausas G4 para poder encender el Spindle Motor
-+						Mensajes en Pantalla
-+			10/05/2019	Cambio de Herramienta 'begin TOOLCHANGE' Mas Completo
-+			20/05/2019	Al finalizar un trabajo suenan unos tonos
-+			28/05/2019	Modificado los 'G0 Z10' y 'G92 Z10' de 'begin HEADER' y 'begin TOOLCHANGE' por 'G0 Z[SAFEZ]' y 'G92 Z[SAFEZ]'
-+							*Así, se permite variar la altura de zona segura desde el programa.
++	MikeK	    13/12/2015	  Written   
++	JohnP	    02/03/2017	  Added multi-tool with pause 
++	CaRLyMx	  08/05/2019	  Todos los movimientos con 'G0' (consumen menos memoria)
++				                  Modificado el comando 'begin HEADER'
++		        09/05/2019	  Añadido en 'begin HEADER':
++				                  Pausas G4 para poder encender el Spindle Motor
++				                  Mensajes en Pantalla
++		        10/05/2019	  Cambio de Herramienta 'begin TOOLCHANGE' Mas Completo
++		        20/05/2019	  Al finalizar un trabajo suenan unos tonos
++		        28/05/2019	  Modificado los 'G0 Z10' y 'G92 Z10' de 'begin HEADER' y 'begin TOOLCHANGE' 
++				                  por 'G0 Z[SAFEZ]' y 'G92 Z[SAFEZ]'
++				                  *Así, se permite variar la altura de zona segura desde el Aspire.
++		       24/09/2019	    G0 de Trabajo pasan a ser G1.
++				                  *Motivo: http://marlinfw.org/docs/gcode/G000-G001.html
++				                  Correcciones menores.
 +
 +==================================================================================
 
-POST_NAME = "Marlin [CaRLyMx MOD] (mm) (*.gcode)"
+POST_NAME = "00-Marlin [CaRLyMx MOD] (mm) (*.gcode)"
 
 FILE_EXTENSION = "gcode"
 
@@ -92,16 +96,17 @@ begin HEADER
 "; *************************************"
 " "
 " "
-"G90 		; Coordenadas en Posiciones absolutas."
-"G21 		; Unidades en Milimetros."
-";M84 	; Apagar Motores Paso a paso."
-";M03 S12000 ; Iniciar Spindle Motor."
+"G90 		      ; Coordenadas en Posiciones absolutas."
+"G21 		      ; Unidades en Milimetros."
+";M84		      ; Apagar Motores Paso a paso."
+"M03 S12000 	; Iniciar Spindle Motor. (Cuando esta controlodo por el Firmware)"
 " "
 "G0 Z[SAFEZ] 	; Subir Z para ir a Origen y que no rasque la broca el material"
-"G28 X Y		; Ir a Origen X Y"
+"G28 X		    ; Ir a Origen X"
+"G28 Y		    ; Ir a Origen Y"
 "G92 Z[SAFEZ]	; Marcar Punto CERO a Z=[SAFEZ]"
-"M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
-"G4 S5			; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
+"M117 ENCIENDA EL SPINDLE Motor Manualmente	; MENSAJE"
+"G4 S5		    ; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
 " "
 " "
 "; *************************************"
@@ -144,30 +149,31 @@ begin FEED_MOVE
 begin TOOLCHANGE
 
 "; +++++++++++++++++++++++++++++++++++++++++++++++++++"
-"; +				CAMBIO DE HERRAMIENTA				+"
-"; +													+"
-"; + 		Tool [T]: [TOOLNAME]		+"
+"; +		        CAMBIO DE HERRAMIENTA       		     +"
+"; +						                                     +"
+"; + 		        Tool [T]: [TOOLNAME]		             +"
 "; +++++++++++++++++++++++++++++++++++++++++++++++++++"
 " "
 " "
 "; ---> Para la Maquina y Cambia Heramienta:"
-"G0 Z[SAFEZ]			; Subir Z para cambiar de herramienta"
-"M05				; Para el Spindle Motor"
-"M84 				; Apagar Motores Paso a paso."
+"G0 Z[SAFEZ]		  ; Subir Z para cambiar de herramienta"
+"M05			        ; Para el Spindle Motor"
+"M84 			        ; Apagar Motores Paso a paso."
 "M300 S2349 P60		; Tono Musical"
 "M300 S2349 P460	; Tono Musical"
 " "
 "; ---> Prepara Origen Z:"
 "M117 CAMBIE HER. Y BUSQUE EL ORIGEN Z"
-"M25		; Hace una Pausa"
+"M25			        ; Hace una Pausa"
 " "
 "; ---> Busca el Origen XY y encienda el Spindle Motor"
-"M03 S12000 	; Iniciar Spindle Motor." 
-"G0 Z[SAFEZ]		; Subir Z para ir a Origen y que no rasque la broca el material"
-"G28 X Y		; Ir a Origen X Y"
-"G92 Z[SAFEZ]	; Marcar Punto CERO a Z=[SAFEZ]"
+"M03 S12000 	    ; Iniciar Spindle Motor." 
+"G0 Z[SAFEZ]		  ; Subir Z para ir a Origen y que no rasque la broca el material"
+"G28 X			      ; Ir a Origen X"
+"G28 Y			      ; Ir a Origen Y"
+"G92 Z[SAFEZ]		  ; Marcar Punto CERO a Z=[SAFEZ]"
 "M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
-"G4 S5			; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
+"G4 S5			      ; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
 " "
 " "
 "; ---> Inicia Proceso:"
