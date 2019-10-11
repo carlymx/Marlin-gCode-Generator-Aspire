@@ -35,7 +35,7 @@
 +
 +==================================================================================
 
-POST_NAME = "07/09/19-Marlin [CaRLyMx MOD] (mm) (.gcode)"
+POST_NAME = "[111019] Marlin [CaRLyMx MOD] (mm) (.gcode)"
 
 FILE_EXTENSION = "gcode"
 
