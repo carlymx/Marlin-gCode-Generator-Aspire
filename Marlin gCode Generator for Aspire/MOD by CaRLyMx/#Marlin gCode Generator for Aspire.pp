@@ -7,7 +7,7 @@
 +                                                	        +
 +===========================================================+
 +           
-+ Versión: 12102019-002
++ Versión: 12102019-003
 +                                    
 + History:                                        
 +                                                
@@ -35,6 +35,7 @@
 +				12/10/2019		Modificados Tonos de Cambio de Herramienta y Final de trabajo por Melodia
 +								si se tiene un Speaker o Buzzer Pasivo (y está activada la Línea en el
 +								Marlin "DEFINE SPEAKER") suena Melodía si nos Suenan Pitidos.
++								Sustituido Comando M76 por M0 en Cambio de Herramienta. http://marlinfw.org/docs/gcode/M000-M001.html
 +
 +==================================================================================
 
@@ -214,8 +215,8 @@ begin TOOLCHANGE
 " "
 "; ---> Prepara Origen Z:"
 "M117 CAMBIE HER. Y BUSQUE EL ORIGEN Z"
-"M25			        ; Hace una Pausa desde la SD"
-"M76					; Pausa trabajo"
+"M25			  ; Hace una Pausa desde la SD"
+"M0					; Pausa trabajo"
 " "
 "; ---> Busca el Origen XY y encienda el Spindle Motor"
 "M03 S12000 	    ; Iniciar Spindle Motor." 
