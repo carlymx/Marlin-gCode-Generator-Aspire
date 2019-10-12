@@ -7,7 +7,7 @@
 +                                                	        +
 +===========================================================+
 +           
-+ Versión: 12102019-001
++ Versión: 12102019-002
 +                                    
 + History:                                        
 +                                                
@@ -194,23 +194,23 @@ begin TOOLCHANGE
 "G0 Z[SAFEZ]		  ; Subir Z para cambiar de herramienta"
 "M05			        ; Para el Spindle Motor"
 "M84 			        ; Apagar Motores Paso a paso."
-; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos
-M300 S3500 P1000
-G4 S2
-M300 S3250 P1000
-G4 S2
-M300 S3000 P1000
-G4 S2
-M300 S2750 P1000
-G4 S2
-M300 S2500 P1000
-G4 S2
-M300 S2250 P1000
-G4 S2
-M300 S2000 P1000
-G4 S2
-M300 S1750 P1000
-G4 S2
+"; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos"
+"M300 S3500 P1000"
+"G4 S2"
+"M300 S3250 P1000"
+"G4 S2"
+"M300 S3000 P1000"
+"G4 S2"
+"M300 S2750 P1000"
+"G4 S2"
+"M300 S2500 P1000"
+"G4 S2"
+"M300 S2250 P1000"
+"G4 S2"
+"M300 S2000 P1000"
+"G4 S2"
+"M300 S1750 P1000"
+"G4 S2"
 " "
 "; ---> Prepara Origen Z:"
 "M117 CAMBIE HER. Y BUSQUE EL ORIGEN Z"
@@ -250,22 +250,22 @@ begin NEW_SEGMENT
 begin FOOTER
 
 "G0 Z[SAFEZ] ;goto safe z"
-; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos
-M300 S3500 P1000
-G4 S2
-M300 S3250 P1000
-G4 S2
-M300 S3000 P1000
-G4 S2
-M300 S2750 P1000
-G4 S2
-M300 S2500 P1000
-G4 S2
-M300 S2250 P1000
-G4 S2
-M300 S2000 P1000
-G4 S2
-M300 S1750 P1000
-G4 S2
+"; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos"
+"M300 S3500 P1000"
+"G4 S2"
+"M300 S3250 P1000"
+"G4 S2"
+"M300 S3000 P1000"
+"G4 S2"
+"M300 S2750 P1000"
+"G4 S2"
+"M300 S2500 P1000"
+"G4 S2"
+"M300 S2250 P1000"
+"G4 S2"
+"M300 S2000 P1000"
+"G4 S2"
+"M300 S1750 P1000"
+"G4 S2"
 "M117 TERMINADO!"
-G4 S60
+"G4 S60"
