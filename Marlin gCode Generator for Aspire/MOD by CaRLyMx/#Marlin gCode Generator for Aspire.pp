@@ -7,7 +7,7 @@
 +                                                	        +
 +===========================================================+
 +           
-+ Versión: 27092019-001
++ Versión: 12102019-001
 +                                    
 + History:                                        
 +                                                
@@ -28,10 +28,13 @@
 +		       	24/09/2019		G0 de Trabajo pasan a ser G1.
 +								*Motivo: http://marlinfw.org/docs/gcode/G000-G001.html
 +								Correcciones menores.
-+				11/10/2019		Script de Inicio más completo, con cuenta atras para iniciar programa
++				27/09/2019		Script de Inicio más completo, con cuenta atras para iniciar programa
 +								Ahora al Inicio Z sube de manera relativa al punto actual y luego se pasa
 +								a modo de coordenadas absolutas.
 +								El M03 S12000 Siempre estubo en el sitio equivocado.
++				12/10/2019		Modificados Tonos de Cambio de Herramienta y Final de trabajo por Melodia
++								si se tiene un Speaker o Buzzer Pasivo (y está activada la Línea en el
++								Marlin "DEFINE SPEAKER") suena Melodía si nos Suenan Pitidos.
 +
 +==================================================================================
 
@@ -100,8 +103,7 @@ begin HEADER
 "; *************************************"
 " "
 " "
-"; ## ANTES DE INICIAR EL GCODE BAJE EL EJE-Z HASTA QUE LA BROCA " 
-";    TOQUE EL MATERIAL A TRABAJAR ( Z=0 ) ## "
+"; ## ANTES DE INICIAR EL GCODE BAJE EL EJE-Z HASTA QUE LA BROCA TOQUE EL MATERIAL A TRABAJAR ( Z=0 ) ## "
 " "
 "; MENSAJES:"
 "M117 EMPEZANDO EN: 5"
@@ -192,13 +194,28 @@ begin TOOLCHANGE
 "G0 Z[SAFEZ]		  ; Subir Z para cambiar de herramienta"
 "M05			        ; Para el Spindle Motor"
 "M84 			        ; Apagar Motores Paso a paso."
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
+; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos
+M300 S3500 P1000
+G4 S2
+M300 S3250 P1000
+G4 S2
+M300 S3000 P1000
+G4 S2
+M300 S2750 P1000
+G4 S2
+M300 S2500 P1000
+G4 S2
+M300 S2250 P1000
+G4 S2
+M300 S2000 P1000
+G4 S2
+M300 S1750 P1000
+G4 S2
 " "
 "; ---> Prepara Origen Z:"
 "M117 CAMBIE HER. Y BUSQUE EL ORIGEN Z"
 "M25			        ; Hace una Pausa desde la SD"
-"M76					;Pausa trabajo"
+"M76					; Pausa trabajo"
 " "
 "; ---> Busca el Origen XY y encienda el Spindle Motor"
 "M03 S12000 	    ; Iniciar Spindle Motor." 
@@ -233,10 +250,22 @@ begin NEW_SEGMENT
 begin FOOTER
 
 "G0 Z[SAFEZ] ;goto safe z"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
-"M300 S2349 P60		; Tono Musical"
-"M300 S2349 P460	; Tono Musical"
+; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos
+M300 S3500 P1000
+G4 S2
+M300 S3250 P1000
+G4 S2
+M300 S3000 P1000
+G4 S2
+M300 S2750 P1000
+G4 S2
+M300 S2500 P1000
+G4 S2
+M300 S2250 P1000
+G4 S2
+M300 S2000 P1000
+G4 S2
+M300 S1750 P1000
+G4 S2
 "M117 TERMINADO!"
+G4 S60
