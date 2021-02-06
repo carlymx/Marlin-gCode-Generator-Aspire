@@ -7,39 +7,43 @@
 +                                                	        +
 +===========================================================+
 +           
-+ Versión: 12102019-003
++ Versión: 05022021-001
 +                                    
 + History:                                        
 +                                                
 + Who    	    When       	What                         
 + ======== 	========== 	===========================================================
-+	MikeK	    13/12/2015		Written   
-+	JohnP	    02/03/2017		Added multi-tool with pause 
-+	CaRLyMx	  	08/05/2019		Todos los movimientos con 'G0' (consumen menos memoria)
-+								Modificado el comando 'begin HEADER'
++	MikeK     13/12/2015		Written
++
++	JohnP     02/03/2017		Added multi-tool with pause 
++
++	CaRLyMx   08/05/2019		Todos los movimientos con 'G0' (consumen menos memoria)
++	                         Modificado el comando 'begin HEADER'
 +		        09/05/2019		Añadido en 'begin HEADER':
-+								Pausas G4 para poder encender el Spindle Motor
-+								Mensajes en Pantalla
++                          Pausas G4 para poder encender el Spindle Motor
++								           Mensajes en Pantalla
 +		        10/05/2019		Cambio de Herramienta 'begin TOOLCHANGE' Mas Completo
 +		        20/05/2019		Al finalizar un trabajo suenan unos tonos
 +		        28/05/2019		Modificado los 'G0 Z10' y 'G92 Z10' de 'begin HEADER' y 'begin TOOLCHANGE' 
-+								por 'G0 Z[SAFEZ]' y 'G92 Z[SAFEZ]'
-+								*Así, se permite variar la altura de zona segura desde el Aspire.
++								           por 'G0 Z[SAFEZ]' y 'G92 Z[SAFEZ]'
++								           *Así, se permite variar la altura de zona segura desde el Aspire.
 +		       	24/09/2019		G0 de Trabajo pasan a ser G1.
-+								*Motivo: http://marlinfw.org/docs/gcode/G000-G001.html
-+								Correcciones menores.
-+				27/09/2019		Script de Inicio más completo, con cuenta atras para iniciar programa
-+								Ahora al Inicio Z sube de manera relativa al punto actual y luego se pasa
-+								a modo de coordenadas absolutas.
-+								El M03 S12000 Siempre estubo en el sitio equivocado.
-+				12/10/2019		Modificados Tonos de Cambio de Herramienta y Final de trabajo por Melodia
-+								si se tiene un Speaker o Buzzer Pasivo (y está activada la Línea en el
-+								Marlin "DEFINE SPEAKER") suena Melodía si nos Suenan Pitidos.
-+								Sustituido Comando M76 por M0 en Cambio de Herramienta. http://marlinfw.org/docs/gcode/M000-M001.html
++								           *Motivo: http://marlinfw.org/docs/gcode/G000-G001.html
++								          Correcciones menores.
++           27/09/2019     Script de Inicio más completo, con cuenta atras para iniciar programa
++								           Ahora al Inicio Z sube de manera relativa al punto actual y luego se pasa
++								           a modo de coordenadas absolutas.
++								           El M03 S12000 Siempre estubo en el sitio equivocado.
++           12/10/2019    Modificados Tonos de Cambio de Herramienta y Final de trabajo por Melodia
++								           si se tiene un Speaker o Buzzer Pasivo (y está activada la Línea en el
++								           Marlin "DEFINE SPEAKER") suena Melodía si nos Suenan Pitidos.
++								           Sustituido Comando M76 por M0 en Cambio de Herramienta. 
++                          http://marlinfw.org/docs/gcode/M000-M001.html
++           06/02/2021    Nuevo textos para cuentas atras.
 +
 +==================================================================================
 
-POST_NAME = "[111019] Marlin [CaRLyMx MOD] (mm) (.gcode)"
+POST_NAME = "[060221] Marlin [CaRLyMx MOD] (mm) (.gcode)"
 
 FILE_EXTENSION = "gcode"
 
@@ -81,9 +85,9 @@ VAR Z_HOME_POSITION = [ZH|A|Z|1.3]
 +                                                
 +================================================
 
-+---------------------------------------------------
++---------------------------------------------
 +  Commands output at the start of the file
-+---------------------------------------------------
++---------------------------------------------
 
 begin HEADER
 
@@ -107,41 +111,41 @@ begin HEADER
 "; ## ANTES DE INICIAR EL GCODE BAJE EL EJE-Z HASTA QUE LA BROCA TOQUE EL MATERIAL A TRABAJAR ( Z=0 ) ## "
 " "
 "; MENSAJES:"
-"M117 EMPEZANDO EN: 5"
+"M117 EMPEZANDO 5"
 "G4 S1"
-"M117 EMPEZANDO EN: 4"
+"M117 EMPEZANDO 4"
 "G4 S1"
-"M117 EMPEZANDO EN: 3"
+"M117 EMPEZANDO 3"
 "G4 S1"
-"M117 EMPEZANDO EN: 2"
+"M117 EMPEZANDO 2"
 "G4 S1"
-"M117 EMPEZANDO EN: 1"
+"M117 EMPEZANDO 1"
 "G4 S1"
 "M117 CALIBRANDO..."
 " "
-"G91            ; Coordenadas en modo Relativo."
+"G91          ; Coordenadas en modo Relativo."
 "G0 Z[SAFEZ] 	; Subir Z para ir a Origen y que no rasque la broca el material"
 " "
-"G90 		    ; Coordenadas en Posiciones absolutas."
-"G21 		    ; Unidades en Milimetros."
-"M84			; Apagar Motores Paso a paso."
+"G90 		      ; Coordenadas en Posiciones absolutas."
+"G21 		      ; Unidades en Milimetros."
+"M84          ; Apagar Motores Paso a paso."
 "G28 X		    ; Ir a Origen X"
 "G28 Y		    ; Ir a Origen Y"
 
-"G92 Z[SAFEZ]		; Le indica a la Maquina donde se encuentra de manera relativa el (eje Z)"
-"				; Estando por tanto el Punto CERO del Z a Z=-[SAFEZ]"
+"G92 Z[SAFEZ]	; Le indica a la Maquina donde se encuentra de manera relativa el (eje Z)"
+"				      ; Estando por tanto el Punto CERO del Z a Z=-[SAFEZ]"
 " "
 "; MENSAJES:"
 "M03 S12000 	; Iniciar Spindle Motor. (Cuando esta controlado por el Firmware)"
-"M117 ENCIENDA SPINDLE: 5"
+"M117 ENCNDA SPINDLE 5"
 "G4 S1"
-"M117 ENCIENDA SPINDLE: 4"
+"M117 ENCNDA SPINDLE 4"
 "G4 S1"
-"M117 ENCIENDA SPINDLE: 3"
+"M117 ENCNDA SPINDLE 3"
 "G4 S1"
-"M117 ENCIENDA SPINDLE: 2"
+"M117 ENCNDA SPINDLE 2"
 "G4 S1"
-"M117 ENCIENDA SPINDLE: 1"
+"M117 ENCNDA SPINDLE 1"
 "G4 S1"
 " "
 " "
@@ -185,9 +189,9 @@ begin FEED_MOVE
 begin TOOLCHANGE
 
 "; ++++++++++++++++++++++++++++++++++++++++++++++++++"
-"; +		        CAMBIO DE HERRAMIENTA			+"
-"; +												+"
-"; + 		        Tool [T]: [TOOLNAME]			+"
+"; +		        CAMBIO DE HERRAMIENTA               +"
+"; +                                                +"
+"; + 		        Tool [T]: [TOOLNAME]                +"
 "; ++++++++++++++++++++++++++++++++++++++++++++++++++"
 " "
 " "
@@ -195,7 +199,7 @@ begin TOOLCHANGE
 "G0 Z[SAFEZ]		  ; Subir Z para cambiar de herramienta"
 "M05			        ; Para el Spindle Motor"
 "M84 			        ; Apagar Motores Paso a paso."
-"; Tonos Musicales, si solo esite Buzzer Activo, sonarán unos pitidos"
+"; Tonos Musicales, si solo exite Buzzer Activo, sonarán unos pitidos"
 "M300 S3500 P1000"
 "G4 S2"
 "M300 S3250 P1000"
@@ -214,19 +218,28 @@ begin TOOLCHANGE
 "G4 S2"
 " "
 "; ---> Prepara Origen Z:"
-"M117 CAMBIE HER. Y BUSQUE EL ORIGEN Z"
-"M25			  ; Hace una Pausa desde la SD"
-"M0					; Pausa trabajo"
+"M117 CAMBIE HER. Y ORIGEN Z"
+"M0                     ; Pausa trabajo"
+"M25                    ; Hace una Pausa desde la SD"
 " "
 "; ---> Busca el Origen XY y encienda el Spindle Motor"
-"M03 S12000 	    ; Iniciar Spindle Motor." 
-"G0 Z[SAFEZ]		  ; Subir Z para ir a Origen y que no rasque la broca el material"
-"G28 X			      ; Ir a Origen X"
-"G28 Y			      ; Ir a Origen Y"
-"G92 Z[SAFEZ]		  ; Marcar Punto CERO a Z=[SAFEZ]"
-"M117 ENCIENDA EL SPINDLE Motor	; MENSAJE"
-"G4 S5			      ; Hace Una Pausa de 5 Segundos para poder encender el motor manualmente"
-" "
+"M03 S12000             ; Iniciar Spindle Motor." 
+"G0 Z[SAFEZ]            ; Subir Z para ir a Origen y que no rasque la broca el material"
+"G28 X                  ; Ir a Origen X"
+"G28 Y                  ; Ir a Origen Y"
+"G92 Z[SAFEZ]           ; Marcar Punto CERO a Z=[SAFEZ]"
+"; MENSAJES:"
+"M03 S12000             ; Iniciar Spindle Motor. (Cuando esta controlado por el Firmware)"
+"M117 ENCNDA SPINDLE 5"
+"G4 S1"
+"M117 ENCNDA SPINDLE 4"
+"G4 S1"
+"M117 ENCNDA SPINDLE 3"
+"G4 S1"
+"M117 ENCNDA SPINDLE 2"
+"G4 S1"
+"M117 ENCNDA SPINDLE 1"
+"G4 S1"
 " "
 "; ---> Inicia Proceso:"
 "M117 EN PROCESO..."
